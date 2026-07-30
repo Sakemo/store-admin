@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -10,6 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -17,6 +19,8 @@ const formSchema = z.object({
 
 export const StoreModal = () => {
     const storeModal = useStoreModal();
+
+    const [loading, setLoading] = useState(false); 
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -26,7 +30,20 @@ export const StoreModal = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        try {
+            setLoading(true);
+
+            const response = await axios.post('/api/stores', values);
+
+            console.log(response.data);
+        } 
+        catch (error) {
+            console.log("[STOREMOD/ON_SUBMIT]: ", error);
+        }
+        finally{
+            setLoading(false);
+        }
+
     }
 
     return (
@@ -45,6 +62,7 @@ export const StoreModal = () => {
                                     <Field data-invalid={fieldState.invalid}>
                                         <FieldLabel htmlFor={field.name}>Nome</FieldLabel>
                                         <Input
+                                            disabled={loading}
                                             {...field}
                                             id={field.name}
                                             aria-invalid={fieldState.invalid}
@@ -57,10 +75,10 @@ export const StoreModal = () => {
                             />
                         </FieldGroup>
                         <Field className="pt-6 flex items-center justify-end" orientation="horizontal">
-                            <Button type="button" variant="outline" onClick={storeModal.onClose}>
+                            <Button disabled={loading} type="button" variant="outline" onClick={storeModal.onClose}>
                                 Cancelar
                             </Button>
-                            <Button type="submit">
+                            <Button disabled={loading} type="submit">
                                 Continuar
                             </Button>
                         </Field>
