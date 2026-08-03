@@ -1,6 +1,5 @@
-import { AuthHeader } from "./(utils)/auth-header";
-
-import { SetupStoreModal } from "./(utils)/setup-store-modal";
+import { AuthHeader } from "../(utils)/auth-header";
+import { SetupStoreModal } from "../(utils)/setup-store-modal";
 
 export default function Home() {
   return (
