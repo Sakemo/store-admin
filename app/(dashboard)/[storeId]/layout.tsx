@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import prismadb from "@/lib/prismadb";
 import { AuthHeader } from "@/app/(root)/(utils)/auth-header";
+import { Navbar } from "@/components/custom/navbar";
 
 export default async function DashboardLayout({ children, params }: {
     children: React.ReactNode;
@@ -26,13 +27,9 @@ export default async function DashboardLayout({ children, params }: {
     if(!store){
         redirect("/");
     }
-
     return (
         <div>
-            <header className="flex items-center justify-between p-4 border-b">
-                <AuthHeader />
-                <div>This will be a navbar</div>
-            </header>
+            <Navbar />
             {children}
         </div>
     )

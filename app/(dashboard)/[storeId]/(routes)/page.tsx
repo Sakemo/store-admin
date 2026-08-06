@@ -1,11 +1,7 @@
-import { AuthHeader } from "@/app/(root)/(utils)/auth-header";
-
-const DashboardPage = () => {
+const DashboardPage = async () => {  
   return (
     <div>
-        <h1 className="px-6 py-4 text-2xl font-bold">
-          Dashboard
-        </h1>
+      <h1>Dashboard</h1>
     </div>
   )
 };
