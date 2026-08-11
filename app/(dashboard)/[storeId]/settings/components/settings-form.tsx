@@ -139,8 +139,8 @@ export const SettingsForm:React.FC<SettingsFormProps> = ({
             description="CUIDADO! Essa área é apenas para desenvolvedores."
         />
         <ApiAlert 
-            title=""
-            description="test-desc"
+            title="NEXT_PUBLIC_API_URL"
+            description={`${origin}/api/${params.storeId}`}
             variant="public"
         />
         </>
