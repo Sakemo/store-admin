@@ -40,7 +40,7 @@ export default function StoreSwitcher({
 
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger>
+        <PopoverTrigger suppressHydrationWarning >
           <Button
             variant={"outline"}
             size={"sm"}
