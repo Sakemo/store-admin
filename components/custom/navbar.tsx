@@ -22,7 +22,7 @@ export const Navbar = async () => {
         <header className="flex items-center justify-between p-4 border-b">
 
             <div className="flex items-center space-x-4">
-                <StoreSwitcher items={stores} />
+                <StoreSwitcher suppressHydrationWarning items={stores} />
                 <MainNav className="mx-6" />
             </div>
 

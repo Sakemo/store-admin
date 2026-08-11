@@ -10,9 +10,8 @@ interface SettingsPageProps {
     }
 };
 
-const SettingsPage: React.FC<SettingsPageProps> = async ({
-    params,
-}) => {
+export default async function SettingsPage({ params }: { params: { storeId: string } | Promise<{ storeId: string }> }) {
+    const resolvedParams = await params;
     const session = await auth.api.getSession({
         headers: await headers()
     }); if(!session) { redirect("/login") };
@@ -20,7 +19,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
 
     const store = await prismadb.store.findFirst({
         where:{
-            id: params.storeId,
+            id: resolvedParams.storeId,
             userId: userId,
         }
     });
@@ -28,6 +27,8 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
     if(!store){
         redirect('/');
     };
+
+    console.log(store)
 
     return(
         <div className="flex-col">
@@ -37,5 +38,3 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
         </div>
     );
 }
-
-export default SettingsPage;

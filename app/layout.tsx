@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import HotToaster from "@/components/custom/hot-toaster";
 import prismadb from "@/lib/prismadb";
 
 const geistSans = Geist({
@@ -31,6 +32,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ModalProvider />
+        <HotToaster />
         {children}
       </body>
     </html>

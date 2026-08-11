@@ -1,8 +1,12 @@
 "use client";
 
+import { toast } from "react-hot-toast";
+
 import * as z from "zod";
+import axios from "axios";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -15,6 +19,9 @@ import {
     FieldError, 
     FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { AlertModal } from "@/components/custom/mod/alert-mod";
+import { ApiAlert } from "@/components/custom/api-alert";
+
 
 interface SettingsFormProps {
     initialData: Store;
@@ -29,6 +36,9 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 export const SettingsForm:React.FC<SettingsFormProps> = ({
     initialData
 }) => {
+    const params = useParams();
+    const router = useRouter();
+
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -39,12 +49,43 @@ export const SettingsForm:React.FC<SettingsFormProps> = ({
         },
     });
 
+    const onDelete = async () => {
+        try{
+            setLoading(true);
+            await axios.delete(`/api/stores/${params.storeId}`);
+            router.refresh();
+            router.push("/");
+            toast.success("Loja deletada com sucesso");
+        }
+        catch(error){
+            toast.error("Algo deu errado. Deletou todos os produtos e categorias da loja?");
+        }
+        finally{
+            setLoading(false);
+        }
+    }
+
     const onSubmit = async (data: SettingsFormValues) => {
-        console.log(data);
+        try{
+            setLoading(true);
+            await axios.patch(`/api/stores/${params.storeId}`, data);
+            router.refresh();
+            toast.success("Loja atualizada");
+        }catch(error){
+            toast.error("Algo deu errado");
+        }finally{
+            setLoading(false)
+        }
     };
 
     return(
         <>
+        <AlertModal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            onConfirm={onDelete}
+            loading={loading}
+        />
         <div className="flex items-center justify-between">
             <Heading 
                 title="Configurações"
@@ -92,6 +133,16 @@ export const SettingsForm:React.FC<SettingsFormProps> = ({
             </Button>
         </form>
         </FormProvider>
+        <Separator />
+        <Heading
+            title="Ferramentas de Desenvolvedor"
+            description="CUIDADO! Essa área é apenas para desenvolvedores."
+        />
+        <ApiAlert 
+            title=""
+            description="test-desc"
+            variant="public"
+        />
         </>
     );
 };
