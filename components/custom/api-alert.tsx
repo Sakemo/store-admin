@@ -1,7 +1,7 @@
 "use client";
 import { Copy, ServerIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
-import { Badge, badgeVariants } from "../ui/badge";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { toast } from "react-hot-toast";
 
