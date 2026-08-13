@@ -1,9 +1,9 @@
+import { Heading } from "@/components/ui/heading";
 import { auth } from "@/lib/auth";
 import prismadb from "@/lib/prismadb";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { SettingsForm } from "./components/settings-form";
-import { Heading } from "@/components/ui/heading";
+import { BannerClient } from "./components/BannerClient";
 
 interface SettingsPageProps {
     params: {
@@ -11,7 +11,7 @@ interface SettingsPageProps {
     }
 };
 
-export default async function SettingsPage({ params }: { params: { storeId: string } | Promise<{ storeId: string }> }) {
+export default async function BannerPage({ params }: { params: { storeId: string } | Promise<{ storeId: string }> }) {
     const resolvedParams = await params;
     const session = await auth.api.getSession({
         headers: await headers()
@@ -29,12 +29,10 @@ export default async function SettingsPage({ params }: { params: { storeId: stri
         redirect('/');
     };
 
-    console.log(store)
-
     return(
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8">
-                <SettingsForm initialData={store} />
+                <BannerClient />
             </div>
         </div>
     );
