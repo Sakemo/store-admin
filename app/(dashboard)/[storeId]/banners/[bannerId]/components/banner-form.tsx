@@ -56,11 +56,10 @@ export const BannerForm: React.FC<BannerFormProps> = ({ initialData }) => {
   const onSubmit = async (data: BannerFormValues) => {
     try {
       setLoading(true);
-
       if (initialData) {
-        await axios.patch(`/api/stores/${params.storeId}/banners/${params.bannerId}`, data);
+        await axios.patch(`/api/${params.storeId}/banners/${params.bannerId}`, data);
       } else {
-        await axios.post(`/api/stores/${params.storeId}/banners`, data);
+        await axios.post(`/api/${params.storeId}/banners`, data);
       }
 
       router.refresh();
@@ -76,7 +75,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}/banners/${params.bannerId}`);
+      await axios.delete(`/api/${params.storeId}/banners/${params.bannerId}`);
       router.refresh();
       router.push(`/${params.storeId}/banners`);
       toast.success("Banner deletado com sucesso.");

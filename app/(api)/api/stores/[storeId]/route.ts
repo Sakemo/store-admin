@@ -6,15 +6,14 @@ import { NextResponse } from "next/server";
 
 export async function PATCH (
     req: Request,
-    context: any
+    { params }: { params: { storeId: string } }
 ) {
     try{
         const session = await auth.api.getSession({
             headers: await headers()
         }); if(!session) { return new NextResponse("Unauthenticated", { status: 401 }) };
         const userId = session.user.id;
-        const params = await context.params;
-
+        
         const body = await req.json();
         const { name } = body;
         if(!name){
