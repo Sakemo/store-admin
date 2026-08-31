@@ -18,8 +18,6 @@ import { ApiAlert } from "@/components/custom/api-alert";
 import ImageUpload from "@/components/custom/image-upload";
 import { useOrigin } from "@/hooks/use-origin";
 import { Banner } from "@/lib/generated/prisma";
-// Importe seu AlertModal aqui se possuir, ex:
-// import { AlertModal } from "@/components/modals/alert-modal";
 
 interface BannerFormProps {
   initialData: Banner | null;

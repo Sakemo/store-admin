@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH (
     req: Request,
-    { params }: { params: { storeId: string } }
+    { params }: { params: Promise<{ storeId: string }> }
 ) {
     try{
         const session = await auth.api.getSession({
@@ -20,13 +20,14 @@ export async function PATCH (
             return new NextResponse("Name is required", { status:400 });
         };
 
-        if(!params.storeId){
+        const resolverdParams = await params;
+        if(!resolverdParams.storeId){
             return new NextResponse("Store ID is Required", { status: 400 });
         };
 
         const store = await prismadb.store.updateMany({
             where: {
-                id: params.storeId,
+                id: resolverdParams.storeId,
                 userId: userId,
             },
             data: {

@@ -16,7 +16,7 @@ export default async function SetupLayout({ children }: { children: React.ReactN
             userId: session.user.id
         }
     })
-
+    
     if(store){
         redirect(`/${store.id}`);
     }
